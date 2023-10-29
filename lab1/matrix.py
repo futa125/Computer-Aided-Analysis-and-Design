@@ -361,7 +361,7 @@ class Matrix:
     def lup_solve(self: Matrix, b: Matrix) -> Optional[Matrix]:
         try:
             self.lup_decomposition()
-            y = self._forward_substitution(self.matrix_p * b._extract_column(0))
+            y = self._forward_substitution(self.matrix_p * b)
             x = self._back_substitution(y)
 
         except ValueError:
