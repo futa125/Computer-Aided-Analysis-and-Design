@@ -236,9 +236,9 @@ class Matrix:
             if abs(self.matrix_a[i, i]) < EPSILON:
                 raise ValueError("matrix is singular")
 
-            self.matrix_a[j, i] = self.matrix_a[j, i] / self.matrix_a[i, i]
+            self.matrix_a[j, i] /= self.matrix_a[i, i]
             for k in range(i + 1, self.row_count):
-                self.matrix_a[j, k] = self.matrix_a[j, k] - self.matrix_a[j, i] * self.matrix_a[i, k]
+                self.matrix_a[j, k] -= self.matrix_a[j, i] * self.matrix_a[i, k]
 
     def _forward_substitution(self: Matrix, b: Matrix):
         if not self._is_square():
