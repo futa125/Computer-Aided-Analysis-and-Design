@@ -23,46 +23,39 @@ def nelder_mead(
 
         h, l = np.argmax(function_values), np.argmin(function_values)
 
-        xh = simplex_points[h]
         xc = np.mean([point for i, point in enumerate(simplex_points) if i != h], axis=0)
-        xr = (1 + alfa) * xc - alfa * xh
+        xr = (1 + alfa) * xc - alfa * simplex_points[h]
 
-        if f(xr) < function_values[l]:
+        if f(xr) < f(simplex_points[l]):
             xe = (1 - gamma) * xc + gamma * xr
 
-            if f(xe) < function_values[l]:
+            if f(xe) < f(simplex_points[l]):
                 simplex_points[h] = xe
-                function_values[h] = f(xe)
             else:
                 simplex_points[h] = xr
-                function_values[h] = f(xr)
 
         else:
-            if all(f(xr) > function_values[j] for j in range(starting_point.size) if j != h):
-                if f(xr) < function_values[h]:
+            if all(f(xr) > f(simplex_points[j]) for j in range(len(simplex_points)) if j != h):
+                if f(xr) < f(simplex_points[h]):
                     simplex_points[h] = xr
-                    function_values[h] = f(xr)
 
-                xk = (1 - beta) * xc + beta * xh
-                if f(xk) < function_values[h]:
+                xk = (1 - beta) * xc + beta * simplex_points[h]
+                if f(xk) < f(simplex_points[h]):
                     simplex_points[h] = xk
-                    function_values[h] = f(xk)
 
                 else:
-                    for i, point in enumerate(simplex_points):
+                    for i in range(len(simplex_points)):
                         if i == l:
                             continue
 
                         simplex_points[i] = sigma * (simplex_points[i] + simplex_points[l])
-                        function_values[i] = f(point)
 
             else:
                 simplex_points[h] = xr
-                function_values[h] = f(xr)
 
         value = 0
-        for fxi in function_values:
-            value += (fxi - f(xc)) ** 2
+        for point in simplex_points:
+            value += (f(point) - f(xc)) ** 2
 
         value *= 1 / 2
         value = math.sqrt(value)
