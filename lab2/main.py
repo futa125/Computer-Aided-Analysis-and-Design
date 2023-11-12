@@ -1,91 +1,75 @@
 from __future__ import annotations
 
-import abc
 import dataclasses
-from typing import Tuple, Dict
 
 import numpy as np
 
-from lab2.cache import point_cache
-from lab2.coordinate_search import coordinate_search
-from lab2.golden_ratio import golden_ration
-from lab2.hooke_jevees import hooke_jevees
+from lab2.functions import BaseFunc, Function1, Function2, Function3
+from lab2.optimisations.coordinate_search import coordinate_search
+from lab2.optimisations.golden_ratio import golden_ration
+from lab2.optimisations.hooke_jevees import hooke_jevees
+from lab2.optimisations.simplex import nelder_mead
 from lab2.types import Point
 
 
 @dataclasses.dataclass
-class BaseFunc(abc.ABC):
-    count: int = dataclasses.field(default=0, init=False)
-    cache: Dict[Tuple[float, ...], Point] = dataclasses.field(default_factory=dict, init=False)
+class Task1(BaseFunc):
+    def function(self: Task1, p: Point) -> float:
+        if p.size != 1:
+            raise ValueError("only 1D values supported")
 
-    def __call__(self: BaseFunc, p: Point) -> Point:
-        hashable_point = tuple(p)
-
-        if hashable_point in self.cache:
-            return self.cache[hashable_point]
-
-        value = self.function(p)
-        self.cache[hashable_point] = value
-        self.count += 1
-
-        return value
-
-    def reset(self: BaseFunc) -> None:
-        self.count = 0
-        self.cache = {}
-
-    def function(self: BaseFunc, p: Point) -> Point:
-        raise NotImplementedError
-
-
-@dataclasses.dataclass
-class F1(BaseFunc):
-    def function(self: F1, p: Point) -> Point:
-        x = p[0]
+        x = float(p[0])
 
         return (x - 3) ** 2
 
 
-@dataclasses.dataclass
-class FTest(BaseFunc):
-    def function(self: FTest, p: Point) -> Point:
-        self.count += 1
+def output(x0: Point, f: BaseFunc) -> None:
+    if x0.size == 1:
+        res = golden_ration(starting_point=x0.copy(), starting_interval=None, f=f)
+        print(f"Golden ration:\nMinimum - {res}\nIterations - {f.count}\n")
+        f.reset()
 
-        x1 = p[0]
-        x2 = p[1]
+    res = coordinate_search(starting_point=x0.copy(), f=f)
+    print(f"Coordinate search:\nMinimum - {res}\nIterations - {f.count}\n")
+    f.reset()
 
-        return (x1 - 4) ** 2 + 4 * (x2 - 2) ** 2
+    res = nelder_mead(starting_point=x0.copy(), f=f)
+    print(f"Nelder-Mead:\nMinimum - {res}\nIterations - {f.count}\n")
+    f.reset()
+
+    res = hooke_jevees(starting_point=x0.copy(), f=f)
+    print(f"Hooke-Jevees:\nMinimum - {res}\nIterations - {f.count}\n")
+    f.reset()
 
 
 def main() -> None:
     # Task 1
-    x0 = np.array([10])
-    f1 = F1()
+    print(f"# Task 1")
+    x0 = np.array([10.0])
+    t1 = Task1()
 
-    res = golden_ration(starting_point=x0, starting_interval=None, f=f1)
-    print(f"Golden ration:\nMinimum - {res}\nIterations - {f1.count}\n")
-    f1.reset()
+    output(x0, t1)
 
-    res = coordinate_search(starting_point=x0, f=f1)
-    print(f"Coordinate search:\nMinimum - {res}\nIterations - {f1.count}\n")
-    f1.reset()
+    # Function 1
+    print(f"# Function 1")
+    x0 = np.array([-1.9, 2.0])
+    f1 = Function1()
 
-    res = hooke_jevees(starting_point=x0, f=f1)
-    print(f"Hooke-Jevees:\nMinimum - {res}\nIterations - {f1.count}\n")
-    f1.reset()
+    output(x0, f1)
 
-    # Test
-
+    # Function 2
+    print(f"# Function 2")
     x0 = np.array([0.1, 0.3])
-    ft = FTest()
+    f2 = Function2()
 
-    res = coordinate_search(starting_point=x0, f=ft)
-    print(f"Coordinate search:\nMinimum - {res}\nIterations - {ft.count}\n")
-    ft.reset()
+    output(x0, f2)
 
-    res = hooke_jevees(starting_point=x0, f=ft)
-    print(f"Hooke-Jevees:\nMinimum - {res}\nIterations - {ft.count}\n")
-    ft.reset()
+    # Function 3
+    print(f"# Function 3")
+    x0 = np.zeros(10)
+    f3 = Function3()
+
+    output(x0, f3)
 
 
 if __name__ == "__main__":

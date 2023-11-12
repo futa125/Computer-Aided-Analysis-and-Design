@@ -5,4 +5,4 @@ from numpy.typing import NDArray
 
 Point = NDArray[np.float64]
 Interval = Tuple[Point, Point]
-ObjectiveFunction = Callable[[Point], Point]
+ObjectiveFunction = Callable[[Point], float]

@@ -13,13 +13,13 @@ def golden_ration(
         starting_point: Optional[Point] = None,
         starting_interval: Optional[Interval] = None,
         e: float = 10e-6,
-        h: float = 1,
+        h: float = 1.0,
 ) -> Point:
     if starting_point.size != 1:
         raise ValueError("golden ratio only support 1-dimensional values")
 
-    a: Point = np.array([0])
-    b: Point = np.array([0])
+    a: Point = np.array([0.0])
+    b: Point = np.array([0.0])
 
     if starting_point is not None:
         a, b = unimodal(starting_point, h, f)

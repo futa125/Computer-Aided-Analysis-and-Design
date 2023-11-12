@@ -2,8 +2,7 @@ import dataclasses
 
 import numpy as np
 
-from lab2.cache import point_cache
-from lab2.golden_ratio import golden_ration
+from lab2.optimisations.golden_ratio import golden_ration
 from lab2.types import Point, ObjectiveFunction
 
 
@@ -13,7 +12,7 @@ class MinimiseLambdaFunction:
     i: int
     f: ObjectiveFunction
 
-    def __call__(self, lambda_value: Point) -> Point:
+    def __call__(self, lambda_value: Point) -> float:
         x = self.x.copy()
         x[self.i] += lambda_value
 
