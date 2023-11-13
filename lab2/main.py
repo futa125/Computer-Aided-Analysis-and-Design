@@ -127,7 +127,10 @@ def task5() -> None:
 
     f = Function6()
 
+    i: int = 0
     while True:
+        i += 1
+
         x0 = np.random.uniform(low=-50.0, high=50.0, size=(2,))
         res = nelder_mead(starting_point=x0.copy(), f=f)
 
@@ -135,6 +138,8 @@ def task5() -> None:
         if abs(f(res)) < e:
             print(f"Nelder-Mead (x0={x0}):\nMinimum - {res}\nIterations - {f.count}\nf(minimum)={f(res)}\n")
             f.reset()
+
+            print(f"Found solution after generating {i} random points")
 
             break
 
