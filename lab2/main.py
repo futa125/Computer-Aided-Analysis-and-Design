@@ -127,11 +127,16 @@ def task5() -> None:
 
     f = Function6()
 
-    for i in range(20):
+    while True:
         x0 = np.random.uniform(low=-50.0, high=50.0, size=(2,))
         res = nelder_mead(starting_point=x0.copy(), f=f)
-        print(f"Nelder-Mead (x0={x0}):\nMinimum - {res}\nIterations - {f.count}\nf(minimum)={f(res)}\n")
-        f.reset()
+
+        e = 10e-4
+        if abs(f(res)) < e:
+            print(f"Nelder-Mead (x0={x0}):\nMinimum - {res}\nIterations - {f.count}\nf(minimum)={f(res)}\n")
+            f.reset()
+
+            break
 
 
 def main() -> None:
