@@ -1,12 +1,16 @@
 from lab2.types import Point, ObjectiveFunction
 
 
-def hooke_jevees(starting_point: Point, f: ObjectiveFunction, dx=0.5, e=10e-6):
+def hooke_jevees(starting_point: Point, f: ObjectiveFunction, dx=0.5, e=10e-6, logging_enabled: bool = False):
     xp = starting_point.copy()
     xb = starting_point.copy()
 
     while True:
         xn = search(xp, f, dx)
+
+        if logging_enabled:
+            print(f"xp={xp}, xb={xb}, xn={xn}")
+            print(f"f(xp)={f(xp)}, f(xb)={f(xb)}, f(xn)={f(xn)}")
 
         if f(xn) < f(xb):
             for i in range(len(xp)):

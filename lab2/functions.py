@@ -11,11 +11,11 @@ from lab2.types import Point
 
 
 @dataclasses.dataclass
-class BaseFunc(abc.ABC):
+class BaseFunction(abc.ABC):
     count: int = dataclasses.field(default=0, init=False)
     cache: Dict[Tuple[float, ...], float] = dataclasses.field(default_factory=dict, init=False)
 
-    def __call__(self: BaseFunc, p: Point) -> float:
+    def __call__(self: BaseFunction, p: Point) -> float:
         hashable_point = tuple(p)
 
         if hashable_point in self.cache:
@@ -27,16 +27,16 @@ class BaseFunc(abc.ABC):
 
         return value
 
-    def reset(self: BaseFunc) -> None:
+    def reset(self: BaseFunction) -> None:
         self.count = 0
         self.cache = {}
 
-    def function(self: BaseFunc, p: Point) -> float:
+    def function(self: BaseFunction, p: Point) -> float:
         raise NotImplementedError
 
 
 @dataclasses.dataclass
-class Function1(BaseFunc):
+class Function1(BaseFunction):
     def function(self: Function1, p: Point) -> float:
         if p.size != 2:
             raise ValueError("only 2D values supported")
@@ -48,7 +48,7 @@ class Function1(BaseFunc):
 
 
 @dataclasses.dataclass
-class Function2(BaseFunc):
+class Function2(BaseFunction):
     def function(self: Function2, p: Point) -> float:
         if p.size != 2:
             raise ValueError("only 2D values supported")
@@ -60,13 +60,13 @@ class Function2(BaseFunc):
 
 
 @dataclasses.dataclass
-class Function3(BaseFunc):
+class Function3(BaseFunction):
     def function(self: Function3, p: Point) -> float:
         return np.sum(np.square(p - np.arange(1, p.size + 1)))
 
 
 @dataclasses.dataclass
-class Function4(BaseFunc):
+class Function4(BaseFunction):
     def function(self: Function4, p: Point) -> float:
         if p.size != 2:
             raise ValueError("only 2D values supported")
@@ -78,7 +78,7 @@ class Function4(BaseFunc):
 
 
 @dataclasses.dataclass
-class Function6(BaseFunc):
+class Function6(BaseFunction):
     def function(self: Function6, x: Point) -> float:
         return (0.5 + (np.square(np.sin(np.sqrt(np.sum(np.square(x))))) - 0.5) /
                 np.square(1 + 0.001 * np.sum(np.square(x))))

@@ -1,3 +1,4 @@
+import logging
 import math
 from typing import Optional
 
@@ -14,6 +15,7 @@ def golden_ration(
         starting_interval: Optional[Interval] = None,
         e: float = 10e-6,
         h: float = 1.0,
+        logging_enabled: bool = False,
 ) -> Point:
     if starting_point.size != 1:
         raise ValueError("golden ratio only support 1-dimensional values")
@@ -33,6 +35,10 @@ def golden_ration(
     fc = f(c)
     fd = f(d)
 
+    if logging_enabled:
+        print(f"a={a}, b={b}, c={c}, d={d}")
+        print(f"f(a)={f(a)}, f(b)={f(b)}, f(c)={f(c)}, f(d)={f(d)}")
+
     while (b - a) > e:
         if fc < fd:
             b = d
@@ -46,6 +52,10 @@ def golden_ration(
             d = a + k * (b - a)
             fc = fd
             fd = f(d)
+
+        if logging_enabled:
+            print(f"a={a}, b={b}, c={c}, d={d}")
+            print(f"f(a)={f(a)}, f(b)={f(b)}, f(c)={f(c)}, f(d)={f(d)}")
 
     return (a + b) / 2
 

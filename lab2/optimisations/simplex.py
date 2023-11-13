@@ -7,11 +7,14 @@ from lab2.types import Point, ObjectiveFunction
 
 
 def nelder_mead(
-        starting_point: Point, f: ObjectiveFunction, step=1.0, alfa=1.0, beta=0.5, gamma=2.0, sigma=0.5, e=10e-6
+        starting_point: Point,
+        f: ObjectiveFunction,
+        step=1.0, alfa=1.0, beta=0.5, gamma=2.0, sigma=0.5, e=10e-6,
+        logging_enabled: bool = False
 ):
     simplex_points: List[Point] = [starting_point]
 
-    for i in range(len(starting_point)):
+    for i in range(starting_point.size):
         new_point = starting_point.copy()
         new_point[i] += step
         simplex_points.append(new_point)
@@ -25,6 +28,9 @@ def nelder_mead(
 
         xc = np.mean([point for i, point in enumerate(simplex_points) if i != h], axis=0)
         xr = (1 + alfa) * xc - alfa * simplex_points[h]
+
+        if logging_enabled:
+            print(f"centroid={xc}, f(centroid)={f(xc)}")
 
         if f(xr) < f(simplex_points[l]):
             xe = (1 - gamma) * xc + gamma * xr
