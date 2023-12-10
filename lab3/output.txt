@@ -1,0 +1,30 @@
+/opt/homebrew/anaconda3/envs/Computer-Aided-Analysis-and-Design/bin/python /Users/futa125/Personal/Repos/Computer-Aided-Analysis-and-Design/lab3/main.py
+# Task 1
+[ 2. -3.] 3.493633830728002e-22
+stuck in loop due to repeated occurrence of point [0. 0.]
+
+# Task 2
+Function 1 + Gradient Descent: [1.00001099 1.00002203], 1.2105130520182825e-10, calculations: 63310, 1979, 0
+Function 1 + Newton-Raphson: [0.99999996 0.99999987], 3.687006761680415e-13, calculations: 480, 15, 15
+Function 2 + Gradient Descent: [3.99999597 2.00000058], 1.754062927471546e-11, calculations: 737, 24, 0
+Function 2 + Newton-Raphson: [4.00000549 2.00000239], 5.300788996871264e-11, calculations: 34, 2, 2
+
+# Task 3
+Starting point (3, 3): [-1.76929235  1.        ], -4.219136248741586, calculations: 19, 19, 19
+Starting point (1, 2): stuck in loop due to repeated occurrence of point [0. 1.]
+Starting point (3, 3) + Golden Ratio: [-1.76929237  1.00000011], -4.219136248741574, calculations: 168, 6, 6
+Starting point (1, 2) + Golden Ratio: [-1.76929236  0.99999998], -4.219136248741586, calculations: 168, 6, 6
+
+# Task 4
+Gauss-Newton: [1.00000209 1.00000394], 1.0398835086314879e-11, calculations: 358
+
+# Task 5
+Gauss-Newton at (-2, 2): [-0.78615138  0.61803399], 5.813222505701296e-19, calculations: 135
+Gauss-Newton at (2, 2): [0.78615138 0.61803399], 5.813222505701296e-19, calculations: 135
+Gauss-Newton at (2, -2): [ 0.11859409 -1.4922526 ], 3.8087805072638945, calculations: 28356
+
+# Task 6
+Gauss-Newton at (1, 1, 1): [0.19343028 0.45917835 3.11103648], 0.3823750963765221, calculations: 869
+
+
+Process finished with exit code 0
