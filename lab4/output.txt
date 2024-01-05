@@ -1,0 +1,19 @@
+# Task 1
+Box + Function 1 + Constraints
+Minimum: [0.0102018  0.01020992], value: 0.9899132826646034
+Box + Function 1 + No constraints
+Minimum: [1.00322152 1.00628032], value: 1.337435932797778e-05
+Box + Function 2 + Constraints
+Minimum: [1.99999733 2.00117934], value: 4.000016245187868
+Box + Function 2 + No constraints
+Minimum: [4.00001614 1.99866483], value: 7.130924896544872e-06
+
+# Task 2
+Function 1 + Starting point [-1.9  2. ]
+Minimum: [-0.50678101  0.26332092], value: 2.2746061187343103
+Function 2 + Starting point [0.1 0.3]
+Minimum: [1.65691528 2.2214325 ], value: 5.686175389662385
+
+# Task 3
+Function 4 + Starting point [5. 5.]
+Minimum: [2. 8.], value: 65.0
