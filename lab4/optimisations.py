@@ -129,9 +129,7 @@ class _OptimiseWithConstraints:
             if constraint(x) <= 0:
                 return math.inf
 
-            result -= math.log(constraint(x))
-
-        result *= 1 / self.t
+            result -= (1 / self.t) * math.log(constraint(x))
 
         for constraint in self.equality_constraints:
             result += self.t * constraint(x) ** 2

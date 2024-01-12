@@ -96,11 +96,23 @@ def task_2() -> None:
     print(f"Function 1 + Starting point {f.default_starting_point}")
     print(f"Minimum: {minimum}, value: {f(minimum)}")
 
+    starting_point: npt.NDArray[np.float64] = np.array([1.9, -2.0])
+    minimum: npt.NDArray[np.float64] = mixed(f, starting_point, implicit_constraints)
+
+    print(f"Function 1 + Starting point {starting_point}")
+    print(f"Minimum: {minimum}, value: {f(minimum)}")
+
     f: Function = F2()
 
     minimum: npt.NDArray[np.float64] = mixed(f, f.default_starting_point, implicit_constraints)
 
     print(f"Function 2 + Starting point {f.default_starting_point}")
+    print(f"Minimum: {minimum}, value: {f(minimum)}")
+
+    starting_point: npt.NDArray[np.float64] = np.array([1.0, 0.5])
+    minimum: npt.NDArray[np.float64] = mixed(f, starting_point, implicit_constraints)
+
+    print(f"Function 2 + Starting point {starting_point}")
     print(f"Minimum: {minimum}, value: {f(minimum)}")
 
     print()
@@ -112,12 +124,12 @@ def task_3() -> None:
     def _constraint_1(x: npt.NDArray[np.float64]) -> float:
         x1, x2 = x
 
-        return x2 - x1
+        return 3 - x1 - x2
 
     def _constraint_2(x: npt.NDArray[np.float64]) -> float:
-        x1, _ = x
+        x1, x2 = x
 
-        return 2 - x1
+        return 3 + 1.5 * x1 - x2
 
     def _constraint_3(x: npt.NDArray[np.float64]) -> float:
         _, x2 = x
@@ -125,13 +137,20 @@ def task_3() -> None:
         return x2 - 1
 
     implicit_constraints: Tuple[Callable[[npt.NDArray[np.float64]], float], ...] = (
-        _constraint_1, _constraint_2, _constraint_3,
+        _constraint_1, _constraint_2,
     )
+
+    explicit_constraints: Tuple[Callable[[npt.NDArray[np.float64]], float], ...] = (_constraint_3,)
 
     f: Function = F4()
 
+    minimum: npt.NDArray[np.float64] = mixed(f, f.default_starting_point, implicit_constraints, explicit_constraints)
+
+    print(f"Function 4 + Starting point {f.default_starting_point}")
+    print(f"Minimum: {minimum}, value: {f(minimum)}")
+
     starting_point: npt.NDArray[np.float64] = np.array([5.0, 5.0])
-    minimum: npt.NDArray[np.float64] = mixed(f, starting_point, implicit_constraints)
+    minimum: npt.NDArray[np.float64] = mixed(f, starting_point, implicit_constraints, explicit_constraints)
 
     print(f"Function 4 + Starting point {starting_point}")
     print(f"Minimum: {minimum}, value: {f(minimum)}")
