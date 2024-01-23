@@ -59,9 +59,9 @@ def task_1() -> None:
     x_euler: List[npt.NDArray[np.float64]] = euler(a, b, starting_state, t_start, t_max, t_step)
     x_reverse_euler: List[npt.NDArray[np.float64]] = reverse_euler(a, b, starting_state, t_start, t_max, t_step)
     x_pece_2: List[npt.NDArray[np.float64]] = predictor_corrector(a, b, starting_state, t_start, t_max, t_step,
-                                                                  euler_predictor, reverse_euler_corrector, 5)
+                                                                  euler_predictor, reverse_euler_corrector, 2)
     x_pece: List[npt.NDArray[np.float64]] = predictor_corrector(a, b, starting_state, t_start, t_max, t_step,
-                                                                euler_predictor, trapezoidal_corrector, 5)
+                                                                euler_predictor, trapezoidal_corrector, 1)
 
     print("Runge kutta: ", cumulative_error(x_runge_kutta, x_analytic))
     print("Trapezoidal: ", cumulative_error(x_trapezoidal, x_analytic))
@@ -208,10 +208,11 @@ def task_3() -> None:
         [3],
     ])
 
-    r = lambda _: np.array([
-        [1],
-        [1],
-    ])
+    def r(_: float) -> npt.NDArray[np.float64]:
+        return np.array([
+            [1],
+            [1],
+        ])
 
     t_start = 0
     t_max = 10
@@ -269,10 +270,11 @@ def task_4() -> None:
         [3],
     ])
 
-    r = lambda t: np.array([
-        [t],
-        [t],
-    ])
+    def r(t_value: float) -> npt.NDArray[np.float64]:
+        return np.array([
+            [t_value],
+            [t_value],
+        ])
 
     t_start = 0
     t_max = 1

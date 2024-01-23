@@ -14,7 +14,7 @@ def runge_kutta(
         t_start: float,
         t_max: float,
         t_step: float,
-        r: Optional = None,
+        r: Optional[Callable[[float], npt.NDArray[np.float64]]] = None,
 ) -> List[npt.NDArray[np.float64]]:
     x: List[npt.NDArray[np.float64]] = [starting_state]
     values = np.linspace(t_start + t_step, t_max, int((t_max - t_start) / t_step) - 1)
@@ -46,7 +46,7 @@ def trapezoidal(
         t_start: float,
         t_max: float,
         t_step: float,
-        r_func: Optional = None,
+        r_func: Optional[Callable[[float], npt.NDArray[np.float64]]] = None,
 ) -> List[npt.NDArray[np.float64]]:
     x: List[npt.NDArray[np.float64]] = [starting_state]
     values = np.linspace(t_start + t_step, t_max, int((t_max - t_start) / t_step) - 1)
@@ -73,7 +73,7 @@ def euler(
         t_start: float,
         t_max: float,
         t_step: float,
-        r_func: Optional[Callable] = None,
+        r_func: Optional[Callable[[float], npt.NDArray[np.float64]]] = None,
 ) -> List[npt.NDArray[np.float64]]:
     x_values: List[npt.NDArray[np.float64]] = [starting_state]
     t_values = np.linspace(t_start + t_step, t_max, int((t_max - t_start) / t_step) - 1)
@@ -104,7 +104,7 @@ def reverse_euler(
         t_start: float,
         t_max: float,
         t_step: float,
-        r_func: Optional = None,
+        r_func: Optional[Callable[[float], npt.NDArray[np.float64]]] = None,
 ) -> List[npt.NDArray[np.float64]]:
     x: List[npt.NDArray[np.float64]] = [starting_state]
     values = np.linspace(t_start + t_step, t_max, int((t_max - t_start) / t_step) - 1)
@@ -133,7 +133,7 @@ def predictor_corrector(
         predictor: Predictor,
         corrector: Corrector,
         corrector_iterations: int,
-        r_func: Optional = None,
+        r_func: Optional[Callable[[float], npt.NDArray[np.float64]]] = None,
 ) -> List[npt.NDArray[np.float64]]:
     x: List[npt.NDArray[np.float64]] = [starting_state]
     values = np.linspace(t_start + t_step, t_max, int((t_max - t_start) / t_step) - 1)
